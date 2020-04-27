@@ -21,10 +21,10 @@ Auto Streak - automatically updates every day (more of a time counter) infinite 
 Streak Journal - Requires daily check in and input.  infinite and set time
     Input types: 
     * goal reached? 
-    * Why or why not? 
-    * Mood
+    * Why or why not? (short text)
+    * Mood (scale 0 - 5?)
     * Photo
-    * Video (Lenght?)
+    * Video (Length?)
 
 Key Days, Months and years (30, 60, 90 etx) generate badge (open badges protocol). Badge requires submission of evidence (photo, text, video) and Confirmation from at least 1 other user.
 
