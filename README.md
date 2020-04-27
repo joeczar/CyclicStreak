@@ -1,22 +1,31 @@
-# hello-preact
+# Cyclic Streak
+An app to keep track of daily goals.
 
-## CLI Commands
+## Requirements
+### Front Page
+Ability to enter start date. Outputs "Cyclical Designed" Streak Counter displaying number of days, months and years. Highlighted "Badges" on 30, 60 and 90 days, 6 & 18 months as well as every year.
 
-``` bash
-# install dependencies
-npm install
+Shareable/Postable image to Social media or download
 
-# serve with hot reload at localhost:8080
-npm run dev
+Log-in to save streak & have multiple streaks.
 
-# build for production with minification
-npm run build
+### User
+Log In 
+minimum profile: email address & password
+Create Streak (Streak limit? Maybe over 3 only paid subscription)
 
-# test the production build locally
-npm run serve
+### Streak
 
-# run tests with jest and preact-render-spy 
-npm run test
-```
+Auto Streak - automatically updates every day (more of a time counter) infinite and set time
 
-For detailed explanation on how things work, checkout the [CLI Readme](https://github.com/developit/preact-cli/blob/master/README.md).
+Streak Journal - Requires daily check in and input.  infinite and set time
+    Input types: 
+    * goal reached? 
+    * Why or why not? 
+    * Mood
+    * Photo
+    * Video (Lenght?)
+
+Key Days, Months and years (30, 60, 90 etx) generate badge (open badges protocol). Badge requires submission of evidence (photo, text, video) and Confirmation from at least 1 other user.
+
+

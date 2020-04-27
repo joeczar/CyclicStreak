@@ -1,5 +1,6 @@
 import { h, Component } from 'preact';
 import style from './style';
+import addDate from '../../lib/streak.js'
 
 export default class Profile extends Component {
 	state = {
@@ -15,20 +16,17 @@ export default class Profile extends Component {
 		this.setState({ time: Date.now() });
 	};
 
-	increment = () => {
-		this.setState({ count: this.state.count+1 });
-	};
-
 	// gets called when this route is navigated to
 	componentDidMount() {
 		// start a timer for the clock:
-		this.timer = setInterval(this.updateTime, 1000);
+		//this.timer = setInterval(this.updateTime, 1000);
 	}
 
 	// gets called just before navigating away from the route
 	componentWillUnmount() {
-		clearInterval(this.timer);
+		//clearInterval(this.timer);
 	}
+
 	handleStreakBeginKeyDown = e => {
 		if (e.keyCode != 13) return
 		e.preventDefault()
@@ -47,7 +45,6 @@ export default class Profile extends Component {
 		const oneDay = 1000 * 60 * 60 * 24
 
 		const differenceMilli = Math.abs(endDate - startDate)
-		console.log(startDate, endDate, differenceMilli)
 		return Math.round(differenceMilli / oneDay)
 	}
 	setStreakLength = () => {
@@ -55,15 +52,28 @@ export default class Profile extends Component {
 		const today = new Date(this.state.today)
 		if (begin != "") {
 			let length = this.daysBetween(begin, today)
-			console.log(length)
 			this.setState({ streakLength: length })
 		}
 	}
-	
 
 	// Note: `user` comes from the URL, courtesy of our router
-	render({ user }, { time, count, streakBegin, streakLength }) {
-		//const streakBeginString = streakBegin.toLocaleString()
+	render({ user }, { time, streakBegin, streakLength }) {
+
+		Date.prototype.addDays = function(days) {
+			const date = new Date(this.valueOf())
+			date.setDate(date.getDate() + days)
+			return date
+		}
+		const beginning = new Date(streakBegin)
+
+		const dayArr = []
+		for (let i = 0; i < streakLength; i++) {
+			let streakDate = beginning.addDays(i)
+			dayArr.push( [streakDate, streakDate.toDateString()] )
+		}
+		
+		console.log(dayArr[0])
+		
 		return (
 			<div class={style.profile}>
 				<h1>Profile: {user}</h1>
@@ -76,7 +86,6 @@ export default class Profile extends Component {
 						<input
 							placeholder='YYYY MM DD'
 							autoFocus={true}
-							// onInput={this.handleStreakBegin}
 							onKeyDown={this.handleStreakBeginKeyDown}
 						>
 						</input>
@@ -90,12 +99,16 @@ export default class Profile extends Component {
 						Streak Length: {streakLength} Days
 					</p>
 				</div>
-				<p>
-					
-					<button onClick={this.increment}>Click Me</button>
-					{' '}
-					Clicked {count} times.
-				</p>
+				
+				<div>
+					<ol>
+						{ dayArr.map( ( day, index ) => 
+							<li key={index}>
+								{day[1]}
+							</li>
+						)} 
+					</ol>
+				</div>
 			</div>
 		);
 	}
