@@ -1,4 +1,3 @@
-
 /*
     this datastructure needs to hold the individual Date Objects, the length of the streak in Days, Months and Years
 */
@@ -68,26 +67,49 @@ export default class Streak {
 
     return monthsArr;
   };
+
+  // I have a feeling this could be much better!
+  numberOfMonths = 0;
+
   getChip = (date) => {
+    // add congradulatory message for milestones §0, 60, 90 days and beyond
     const dayNumber = date[2];
     const startDate = this.beginning.getDate();
     const thisDate = date[1].getDate();
-    const thisMonth = date[1].getMonth();
-    const months = this.groupByMonth();
-    const sixMonths = this.beginning.getMonth() + 6;
-    const nineMonths = this.beginning.getMonth() + 9;
-    //   const eighteenMonths = months[17][2][startDate -1]
+    const monthDiff = (d1, d2) => {
+      return (
+        d2.getMonth() -
+        d1.getMonth() +
+        12 * (d2.getFullYear() - d1.getFullYear())
+      );
+    };
+
+    const numberOfMonths = monthDiff(this.beginning, date[1]);
+
+    const monthOrMonths = () => {
+      if (numberOfMonths !== 1) {
+        return "months";
+      }
+      return "month";
+    };
 
     if (dayNumber === 30 || dayNumber === 60 || dayNumber === 90) {
       return `Congratulations for ${dayNumber} days!`;
-    } else if (thisMonth === sixMonths && thisDate === startDate) {
-      return `Congratulations for six months!`;
-    } else if (thisMonth === nineMonths && thisDate === startDate) {
-      return `Congratulations for nine months!`;
-    } 
-     return "";
+    } else if (
+      thisDate === startDate &&
+      dayNumber !== 0 &&
+      numberOfMonths < 12
+    ) {
+      return `Congratulations for ${numberOfMonths} ${monthOrMonths()}!`;
+    } else if (
+      numberOfMonths % 12 === 0 &&
+      thisDate === startDate &&
+      dayNumber !== 0
+    ) {
+      return `Wow! Way to go on year ${numberOfMonths / 12}`;
     }
-  
+    return "";
+  };
 }
 const getMonthName = (date) => {
   const month = new Array();
